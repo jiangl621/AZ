@@ -44,7 +44,6 @@ Avoid the costs of physically adding hardware or space to your physical location
 Connect your physical network to the Azure cloud network seamlessly.  
 
 
-
 Cloud-Init
 - Cloud-init is an open-source package widely used in cloud computing environments to perform initial configuration of virtual machines (VMs) during their instantiation.
 - Azure VM supports for Cloud-Init Across Most Linux Distros That Support It
@@ -92,11 +91,11 @@ There are two other points to consider about the virtual machine location.
 
 ### VM-Size
 
+![Alt text](image-6.png)
+
 Azure offers different memory and storage options for different virtual machine sizes. 
 
 Rather than specify processing power, memory, and storage capacity independently, Azure provides different virtual machine sizes that offer variations of these elements in different size configurations.
-
-> Vms are grouped into Types , Sizes 
 
 The best way to determine the appropriate machine size is to consider the type of workload your machine needs to run. 
 Based on the workload, you can choose from a subset of available virtual machine sizes (to optimized for specific use cases).  
@@ -110,9 +109,9 @@ You can resize a virtual machine if your current hardware configuration is allow
 This option provides a fully agile and elastic approach to virtual machine management.   
 **When you stop and deallocate the virtual machine, you can select any size available in your region.**
 
-:::danger
-**Resizing a machine might require a restart that can cause a temporary outage or change configuration settings such as the IP address.**
-:::
+:::danger  
+**Resizing a machine might require a restart that can cause a temporary outage or change configuration settings such as the IP address.**  
+:::  
 
 ### AZ storage 
 
@@ -154,7 +153,6 @@ Images can be found in the Azure Marketplace, for example
 you can also create your own disk image. (64-bit operating systems is required) and it can be uploaded to Azure Storage and used to create an Azure virtual machine.  
 
 > What is OS? The Program that manages all other programs in A Computer   
-
 
 ## Determine VM storage
 
@@ -201,7 +199,6 @@ Data disks are registered as `SCSI` drives and are labeled with a letter you cho
 
 ### Choose your Storage for your VM
 
-
 ## Create VM in AZ portal
 
 ![Alt text](image-5.png)
@@ -218,15 +215,23 @@ https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/6-
 ## AZ Compute Unit, ACU
 ACU provides a way of comparing compute CPU performance across AZ-SKUs
 
-## Hyper-V
+## VM Generations
+
+![Alt text](image-7.png)
+
+Hyper-V
 - M$'s hardware virtualization Product 
 - Hyper-V just like Virtual Box
 
-## Accessing AZ Vm
+## (Connect)Accessing AZ Vm
 
 you can connect Azure virtual machines with the SSH and RDP protocols, Cloud Shell, and Azure Bastion.
 
+![Alt text](image-8.png)
+
 ### SSH 
+
+![Alt text](image-10.png)
 
 To connect to a Linux-based virtual machine 
 - port 22 TCP
@@ -236,39 +241,34 @@ SSH key pairs has 2 keys `ssh-keygen -t rsa`
 - The public key is placed on your Linux virtual machine, or any other service that you wish to use with public-key cryptography.
 - The private key remains on your local system.
 
-
 `ssh -i ~/.ssh/id_rsa.pub <vm-user-name>@<public_addr_ip>`  
 > Protect your private key. Don't share your private key. Your public key can be shared with anyone, but only you (or your local security infrastructure) should possess your private key.
-
-
-Azure Bastion
-- Using browser and the Azure Portal
-- Good for person who uses the OS that has no terminal (google chrome book etc.)
-- Using Subnet to VNt (called AzureBastionSubet, 32 address)
 
 ## AZ Update Management 
 
 - Allow you to manage and install O.S updates and patches for both win & linux VM that are deployed in Azure, On-premises, or in other cloud providers
 - Perform every 12H on a Win and every 3H on a linux by default
-- GO Operations | Guest + Host Update , it isntalls the MS Monitoring Agent (MMA) 
+- GO Operations | Guest + Host Update , it install the MS Monitoring Agent (MMA) 
 
 ### AZ automation 
-- It allow us enable Update Management, Change Tracking & Inventory, and Start/Stop Vms during Off-Hours Features For Your Servers And Virtual machines.  These Features have a depedency on a LOG Analytics workspace, and therefore Require Linking The WorkSpace With An Automation Account
+  
+t allow us enable Update Management, Change Tracking & Inventory, and Start/Stop Vms during Off-Hours Features For Your Servers And Virtual machines.  These Features have a dependency on a LOG Analytics workspace, and therefore Require Linking The WorkSpace With An Automation Account
 
 Delete VM should also delete related Resource Group
 
-## Linux VM SSH 
+## SSH 
+![Alt text](image-9.png)
 
 Create A VM : Virtual Machine | Add | Select an Image (FROM MARKETPLACE) , Select a VM Size , Select Authentication Type [SSH PUBLIC KEY] | Select inbound port [Port 22] | Select OS disk Type [Standard SSD] | Select Encryption Type [By Default]
 
-GO NETWORK | SSH [SETUP SSH] | BASTION [ADD VM SUBNET] & [UPLOAD `*.pem` file] | ENTER BROWSER MODE TO OPERATE VM
+`GO NETWORK | SSH [SETUP SSH] | BASTION [ADD VM SUBNET] & [UPLOAD *.pem file] | ENTER BROWSER MODE TO OPERATE VM`
 
 Log Analytics workspace
 - Keep the error logs
 
 Automation Account
 - Let update management work
-- Once A Automation Account is created A updat emanagment can be setup by you 
+- Once A Automation Account is created A update management can be setup by you 
 - Runbooks gallery : Provide script run automatically for specific purpose 
 - Python Package
 
@@ -277,7 +277,13 @@ Server Manager In WIN VM
 
 ### Bastion 
 
-The Azure Bastion service is a fully platform-managed PaaS service. Azure Bastion provides secure and seamless RDP/SSH connectivity to your virtual machines directly over SSL. 
+The Azure Bastion service is a fully platform-managed PaaS service.  
+Azure Bastion provides secure and seamless RDP/SSH connectivity to your virtual machines directly over SSL. 
+
+It provides
+- browser and the Azure Portal
+- for person who uses the OS that has no terminal (google chrome book etc.)
+- Subnet to VNet (called `AzureBastionSubnet`, 32 address)
 
 When you connect via Azure Bastion, your virtual machines don't need a public IP address. 
 https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/7-connect-to
@@ -286,15 +292,14 @@ https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/7-
 **Azure Bastion lets you connect to the virtual machine directly from the Azure portal.**  
 You aren't a client, agent, or another piece of software.  
 
-### RDB 
+### RDB  
 
 To connect to a Windows-based virtual machine hosted on Azure
 
 Remote Desktop Protocol 
-- provide GUI
+- provide GUI  
 - port 3389 via TCP and UDP  
 
-To create an RDP connection, you specify the IP address for the virtual machine. 
-
+To create an RDP connection, you specify the IP address for the virtual machine.     
 As an option, you can select the port to use for the connection.  
 The system provides you with a downloadable RDP file to use for the connection.  
