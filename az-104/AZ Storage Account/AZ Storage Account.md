@@ -65,7 +65,7 @@ Why we need Secondary Region?
 - Incase primary regional disaster    
 - **Is Not available for read or write access**  
 
-Copeis data `sync` in primary or physical region.  
+Copies data `sync` in primary or physical region.  
 Copies data `async` in another region  
 ![Alt text](image-18.png)  
 

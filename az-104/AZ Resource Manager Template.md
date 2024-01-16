@@ -18,15 +18,18 @@ Automate deployment of virtual machines (VMs) by using Azure Resource Manager te
 - Deploy from a template.
 - Save a deployment as an Azure Resource Manager template.
 
-## Benifit 
+## Benefit 
 
-1. Templates improve consistency : Resource Manager templates provide a common language for you and others to describe your deployments.
-2. Templates help express complex deployments : Templates enable you to deploy multiple resources in the correct order
+1. Templates improve consistency :   
+Resource Manager templates provide a common language for you and others to describe your deployments.
+2. Templates help express complex deployments :   
+Templates enable you to deploy multiple resources in the correct order
 3. Templates reduce manual, error-prone tasks.
-4. Templates are code : Version Contorl like Git
+4. Templates are code : Version Control like `git`
 5. Templates promote reuse : Template parameters enable you to create multiple versions of your infrastructure, such as staging and production, while still using the exact same template.
 6. Templates are linkable : You can link Resource Manager templates together to make the templates themselves modular
-7. Templates simplify orchestration : You only need to deploy the template to deploy all of your resources. Normally this would take multiple operations.
+7. Templates simplify orchestration :  
+You only need to deploy the template to deploy all of your resources. Normally this would take multiple operations.
 
 ![Alt text](image-50.png)
 

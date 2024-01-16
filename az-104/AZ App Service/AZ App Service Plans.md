@@ -8,7 +8,7 @@ When you create an App Service plan in a region, a set of compute resources is c
 
 Any applications that you place into the plan run on the compute resources defined by the plan.
 
-Each App Service plan defines `3` settings:
+Each App Service plan defines `3` settings :
 1. Region:  
 The region for the App Service plan, such as `West US`, `Central India`, `North Europe`, and so on.
 2. Number of VM instances  

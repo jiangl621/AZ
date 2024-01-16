@@ -1,86 +1,100 @@
 # AZ VM Management
 
-## Learn How to
-- Implement availability sets and availability zones.
-- Implement update and fault domains.
-- Implement Azure VM Scale Sets.
-- Autoscale VMs.
-
+Learn How to Implement
+- **availability sets** and **availability zones**.
+- **update** and **fault domains**.
+- Azure **VM Scale Sets**.
+- **Autoscale** VMs.
 
 ## Plans for maintenance & downtime
 
-1. An unplanned hardware maintenance event  
-When the Azure platform predicts a  failure of any platform component associated to a physical machine, it issues an unplanned hardware maintenance event.  
+An unplanned hardware maintenance event  
+- When the Azure platform predicts a  failure of any platform component associated to a physical machine, it issues an unplanned hardware maintenance event.  
 Azure uses Live Migration technology to migrate your VMs from the failing hardware to a healthy physical machine.  
-> **Live Migration is a VM preserving operation that only pauses the VM for a short time, but performance might be reduced before or after the event.**
 
-2. Unexpected downtime   
-Unexpected downtime can include local network failures, local disk failures, or other rack level failures.  
+**Live Migration is a VM preserving operation that only pauses the VM for a short time, but performance might be reduced before or after the event.**
+
+Unexpected downtime   
+- Unexpected downtime can include local network failures, local disk failures, or other rack level failures.  
 **When detected, the Azure platform automatically migrates (heals) your VM to a healthy physical machine in the same datacenter.**   
 **During the healing procedure, VMs experience downtime (reboot) and in some cases loss of the temporary drive.**  
 
-1. Planned maintenance events  
-Events are periodic updates made by Microsoft to the underlying Azure platform to improve overall `reliability`, `performance`, and `security` of the platform infrastructure that your VMs run on.  
+Planned maintenance events  
+- Events are periodic updates made by Microsoft to the underlying Azure platform to improve overall `reliability`, `performance`, and `security` of the platform infrastructure that your VMs run on.  
 **Most of these updates are performed without any impact to your VMs or Cloud Services.**  
 
-
 :::danger  
-Microsoft doesn't automatically update your VM operating system or other software. 
+Microsoft doesn't automatically update your VM operating system or other software.  
+You have complete control and responsibility for those updates.   
 
-You have complete control and responsibility for those updates.  
-
-However, the underlying software host and hardware are periodically patched to ensure reliability and high performance.  
+However, **the underlying software host and hardware are periodically patched to ensure reliability and high performance.**  
 :::
 
 
-## Vms Management
+Each VM in your availability set is assigned an **update domain** and a **fault domain** by the underlying Azure platform. 
+- Update domains indicate groups of VMs and underlying physical hardware that can be rebooted at the same time.
+
+Using two or more VMs in an availability set helps highly available applications and meets the 99.95% Azure SLA.
+
+Availability sets offer improved VM to VM latencies compared to availability zones, since VMs in an availability set are allocated in closer proximity.
+
+Availability sets have **fault isolation** for many possible failures, minimizing single points of failure, and offering high availability.
+
+However, availability sets are still susceptible to certain shared infrastructure failures, like datacenter network failures, which can affect multiple fault domains.
+
+**If your highest priority is the best reliability for your workload, replicate your VMs across multiple availability zones.(more reliability than availability sets)**  
+
+## VMs Management
 
 https://mwesterink.wordpress.com/2018/09/20/case-study-availability-sets-vs-availability-zone/
 
-![Alt text](image.png)
+![Alt text](vmm.png)
 
 ## Availability Sets
 
-Availability sets allow workloads to be spread over multiple hosts, racks but **still remain at the same data center**;
+Availability sets allow workloads to be **spread over multiple hosts, racks but still remain at the same data center**;
 
 :::danger  
-Adding your VMs to an availability set won't protect your applications from operating system or application-specific failures. 
-You'll need to explore other disaster recovery and backup techniques to provide application-level protection.  
+Adding your VMs to an availability set **won't protect your applications from operating system or application-specific failures**.   
+
+You'll **need to explore other disaster recovery and backup techniques to provide application-level protection**.  
 :::  
 
+### Considerations  
 
-### Considerations For VMs
+[Redundancy](https://g.co/kgs/kiK9LX) (refers same Identical VM in a Set).  
+- To achieve redundancy in your configuration, place multiple VMs in an availability set.  
 
-1. Consider [redundancy](https://g.co/kgs/kiK9LX).  
-To achieve redundancy in your configuration, place multiple VMs in an availability set.
-1. Consider **separation of application tiers**.  
-Each application tier exercised in your configuration should be located in a separate availability set.   
-The separation helps to mitigate single point of failure on all machines.
-1. Consider load balancing.  
-A load-balanced availability set by using Azure Load Balancer allow us to distributes incoming traffic across working instances of services that are defined in your load-balanced availability set.
-1. Consider managed disks for block-level storage.   
-You can use Azure managed disks with your Azure VMs in availability sets for block-level storage.
+**Separation of application tiers**.  
+- The separation helps to mitigate single point of failure on all machines.
+- Each application tier exercised in your configuration should be located in a separate availability set. 
+
+Load balancing availability Set  
+- By using Azure Load Balancer availability set allow us to distributes incoming traffic across working instances of services that are defined in your load-balanced availability set.
+
+Managed disks for block-level storage (AZ block storage).   
+- (can) use Azure managed disks with your Azure VMs in availability sets for block-level storage.
 
 ### Benefits
-1. All VMs in an availability set should perform the identical set of functionalities and have the same software installed.
-2. Azure ensures that VMs in an availability set run across multiple physical servers, compute racks, storage units, and network switches.
-3. **If a hardware or Azure software failure occurs, only a subset of the VMs in the availability set are affected.**
-Your application stays up and continues to be available to your customers
-1. You can create a VM and an availability set `at the same time`.
-2. A VM can only be added to an availability set when the VM is created.  
-To change the availability set for a VM, you need to delete and then recreate the VM.
-1. You can build availability sets by using the **Azure portal, Azure Resource Manager (ARM) templates, scripting, or API tools**.
-2. Microsoft provides robust Service Level Agreements (SLAs) for Azure VMs and availability sets.  
 
+1. (Redundancy) All VMs in an availability set should perform the identical set of functionalities and have the same software installed.
+2. Azure ensures that VMs in an availability set run across multiple physical servers, compute racks, storage units, and network switches.
+3. **If a hardware or Azure software failure occurs, only a subset of the VMs in the availability set are affected.**  
+Your application stays up and continues to be available to your customers
+4. You can create a VM and an availability set `at the same time`.
+5. A VM can only be added to an availability set when the VM is created.  
+To change the availability set for a VM, you need to delete and then recreate the VM.  
+1. Multiple availability sets creation options. 
+**Azure portal, Azure Resource Manager (ARM) templates, scripting, or API tools**.
+2. Microsoft provides robust Service Level Agreements (SLAs) for Azure VMs and availability sets.  
 
 ## Availability Zones
 
 **An availability zone in an Azure region is a combination of a fault domain and an update domain.**
 
-- The Azure platform recognizes this distribution across update domains to make sure that VMs in different zones aren't updated at the same time.
+The Azure platform recognizes this distribution across update domains to make sure that VMs in different zones aren't updated at the same time.  
 
-
-You can use availability zones to build high-availability into your application architecture by colocating your compute, storage, networking, and data resources within a zone and replicating in other zones.
+You can use availability zones to build high-availability into your application architecture by collocating your compute, storage, networking, and data resources within a zone and replicating in other zones.
 
 ### Properties
 
@@ -136,8 +150,6 @@ The VMs in each fault domain are contained in different availability sets.
 ![Alt text](image-1.png)
 - The web availability set contains two VMs with one machine from each fault domain. 
 - The SQL availability set contains two different VMs with one from each fault domain.
-
-
 
 ## Scaling  
 
