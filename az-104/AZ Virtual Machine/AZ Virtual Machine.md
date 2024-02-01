@@ -2,7 +2,7 @@
 
 ## Scenario 
 
-Your company is doing consumer research, and your team manages the on-premises servers. The servers you administer run the entire company infrastructure from web servers to databases. However, the hardware is aging and starting to struggle to keep up with some of the new data analysis applications being deployed. Rather than upgrade the hardware, the company has decided to deploy Azure virtual machines.
+Your company is doing consumer research, and your team manages the on-premises servers. The servers you administer run the entire company infrastructure from web servers to databases. However, the hardware is aging and starting to struggle to keep up with some of the new data analysis applications being deployed. Rather than upgrade the hardware, the company has decided to deploy Azure virtual machines.  
 
 ![](image-1.png)  
 
@@ -13,7 +13,7 @@ Azure Virtual Machines is the basis of the Azure infrastructure as a service (Ia
 - You can use virtual machines to quickly scale up and down with demand and pay only for what you use.
 
 The responsibilities associated with configuring and maintaining virtual machines is shared between Microsoft and the customer.  
-The following chart shows how the responsibilities are handled across the `IaaS` (virtual machines), `PaaS`, `SaaS`, and on-premises offerings.
+The following chart shows how the responsibilities are handled across the `IaaS` (virtual machines), `PaaS`, `SaaS`, and `on-premises` offerings.
 ![Alt text](image.png)
 
 ## VM & Networking Components
@@ -22,23 +22,23 @@ Once VM is created, the networking components will be either created or associat
 
 ## Benefit IaaS & VMs
 
-1. Consider **test and development**. 
-IaaS and virtual machines make it quick and economical to scale up dev-test environments up and down.
-2. Consider **website hosting**. 
-Running websites by using IaaS and virtual machines can be less expensive than traditional web hosting.
-3. Consider **storage, backup, and recovery**. 
-Virtual machines let organizations avoid the expense for storage and complexity of storage management.
+1. **Test and Development**. 
+IaaS and VMs make it quick and economical to scale up dev-test environments up and down.
+2. **Website hosting**. 
+Less expensive than traditional web hosting.
+3. **Storage, Backup, & Recovery**. 
+VMs let organizations avoid the expense for storage and complexity of storage management.
 Recovery typically requires a skilled staff to manage data and meet legal and compliance requirements. 
 IaaS is useful for handling unpredictable demand and steadily growing storage needs.  
 You can simplify planning and management of backup and recovery systems.
-4. Consider **high-performance computing**. 
+1. Consider **high-performance computing**. 
 Virtual machines enable high-performance computing (HPC) on supercomputers, computer grids, or computer clusters. 
 HPC helps solve complex problems involving millions of variables or calculations. 
 You can support scenarios such as earthquake and protein folding simulations, climate and weather predictions, financial modeling, and evaluating product designs.
-5. Consider **big data analysis**.  
+1. Consider **big data analysis**.  
 Big data is a popular term for massive data sets that contain potentially valuable patterns, trends, and associations.  
 Mining data sets to locate or tease out these hidden patterns requires a huge amount of processing power, which IaaS economically provides.
-6. Consider extended **datacenters**. 
+1. Consider **extended datacenters**. 
 Add capacity to your datacenter by adding virtual machines in Azure.  
 Avoid the costs of physically adding hardware or space to your physical location.  
 Connect your physical network to the Azure cloud network seamlessly.  
@@ -212,20 +212,21 @@ Data disks are registered as `SCSI` drives and are labeled with a letter you cho
 
 https://learn.microsoft.com/en-us/training/modules/configure-virtual-machines/6-create-portal
 
-## AZ Compute Unit, ACU
+## Azure Compute Unit, ACU
+
 ACU provides a way of comparing compute CPU performance across AZ-SKUs
 
-## VM Generations
-
+## VM (Hyper-V) Generations
+ 
 ![Alt text](image-7.png)
 
 Hyper-V
-- M$'s hardware virtualization Product 
+- MS' hardware virtualization Product 
 - Hyper-V just like Virtual Box
 
-## (Connect)Accessing AZ Vm
+## (Connect) Accessing AZ VM
 
-you can connect Azure virtual machines with the SSH and RDP protocols, Cloud Shell, and Azure Bastion.
+you can connect Azure virtual machines with the `SSH` and `RDP` protocols, `Cloud Shell`, and `Azure Bastion`.
 
 ![Alt text](image-8.png)
 
@@ -234,7 +235,7 @@ you can connect Azure virtual machines with the SSH and RDP protocols, Cloud She
 ![Alt text](image-10.png)
 
 To connect to a Linux-based virtual machine 
-- port 22 TCP
+- port `22` TCP
 - RSA key accessing authorization
 
 SSH key pairs has 2 keys `ssh-keygen -t rsa`   
@@ -252,7 +253,9 @@ SSH key pairs has 2 keys `ssh-keygen -t rsa`
 
 ### AZ automation 
   
-t allow us enable Update Management, Change Tracking & Inventory, and Start/Stop Vms during Off-Hours Features For Your Servers And Virtual machines.  These Features have a dependency on a LOG Analytics workspace, and therefore Require Linking The WorkSpace With An Automation Account
+It allows us enable Update Management, Change Tracking & Inventory, and Start/Stop Vms during Off-Hours Features For Your Servers And Virtual machines.  
+
+These Features have a dependency on a LOG Analytics workspace, and therefore Require Linking The WorkSpace With An Automation Account
 
 Delete VM should also delete related Resource Group
 
